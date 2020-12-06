@@ -22,6 +22,7 @@ Immediate:
 1. I'd want to sort out all the small bugs
   - For example, if you repeatedly change the account you are logged in with, caching can create some display issues
   - There were a few obvious small bugs like this that could be fixed quite easily
+  - If you encounter any of these small bugs, just reload the page it should work fine then!
 2. I would build out some features
   - Such as updating the time periods via manual entry (make them inputs)
   - Display the time in a more readable format in the persons local timezone
