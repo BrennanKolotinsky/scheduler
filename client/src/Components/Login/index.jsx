@@ -46,9 +46,7 @@ class Login extends Component {
 	    	alert("Authenticated!");
 			this.props.displayData(true);
 			localStorage.setItem('token', loginAttempt.data.token); // set our token for easy login
-			localStorage.setItem('username', username);
-	  		localStorage.setItem('password', password);
-	  		localStorage.setItem('uid', loginAttempt.data.user._id);
+	  		localStorage.setItem('user', JSON.stringify(loginAttempt.data.user));
 	    } else {
 	    	alert("Invalid username or password!");
 	    }

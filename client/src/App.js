@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Login from "./Components/Login/index.jsx";
 import Register from "./Components/Registration/index.jsx";
+import DataDisplay from "./Components/DataDisplay/index.jsx";
 import Module from 'module';
 
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
   }
 
   checkLoginToken = async () => {
-    let validToken = await axios(
+    const validToken = await axios(
       {
         method: "POST", 
         url: "/api/checkLoginTokenIsValid",
@@ -31,10 +32,12 @@ class App extends Component {
   }
 
   displayData = (auth) => {
+    console.log(this.state.register)
     this.setState({authenticated: auth});
   }
 
   updateRegistration = (registering) => {
+    console.log("here");
     this.setState({
       register: registering
     });
@@ -46,8 +49,13 @@ class App extends Component {
         <div style={this.state.authenticated === false && this.state.register === false ? {} : { display : 'none' } }>
           <Login displayData={ this.displayData } updateRegistration={ this.updateRegistration } authenticated={ this.state.authenticated }  />
         </div>
-        <div style={this.state.register === true ? {} : { display : 'none' } }>
+
+        <div style={this.state.authenticated === false && this.state.register === true ? {} : { display : 'none' } }>
           <Register displayData={ this.displayData } updateRegistration={ this.updateRegistration } />
+        </div>
+
+        <div style={this.state.authenticated === true ? {} : { display : 'none' } }>
+          <DataDisplay />
         </div>
       </div>
     );
