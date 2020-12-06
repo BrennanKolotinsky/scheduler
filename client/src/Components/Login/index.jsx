@@ -49,15 +49,22 @@ class Login extends Component {
 	    }
 	}
 
+	register = () => {
+
+	}
+
     render() {
 
 		return (
 			<div className="marginAddedTop">
 				<h2>Login Page!</h2>
 
-				<input className="block inputs" type="text" placeholder="username" onKeyPress={ (event) => this.handleKeyPress(event) } onChange= { (event) => this.updateUserName(event) }></input>
-				<input className="block marginAddedLeft inputs" type="password" placeholder="password" onKeyPress={ (event) => this.handleKeyPress(event) } onChange= { (event) => this.updatePassword(event) }></input>
+				<input className="block inputs" type="text" placeholder="username (admin)" onKeyPress={ (event) => this.handleKeyPress(event) } onChange= { (event) => this.updateUserName(event) }></input>
+				<input className="block marginAddedLeft inputs" type="password" placeholder="password (test)" onKeyPress={ (event) => this.handleKeyPress(event) } onChange= { (event) => this.updatePassword(event) }></input>
 				<button className="inputs confirmBtn" onClick={ () => this.checkAuth() }>Login</button>
+				<div>
+					<button className="inputs registerBtn marginAddedSmaller" onClick={ () => this.register() }>Register</button>
+				</div>
 			</div>
 		);
 	}
