@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const generatePassword = require('password-generator');
 const bodyParser = require('body-parser');  // req.body now supplies information!
 const jwt = require("jsonwebtoken"); // web tokens
