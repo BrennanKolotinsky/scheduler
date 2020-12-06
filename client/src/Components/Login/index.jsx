@@ -26,7 +26,9 @@ class Login extends Component {
 	}
 
 	checkAuth = async () => {
-		if (this.state.username === '' || this.state.password === '')
+		const { username, password } = this.state;
+
+		if (username === '' || password === '')
 			alert("Incomplete login info!");
 
 		const loginAttempt = await axios(
@@ -34,8 +36,8 @@ class Login extends Component {
 	        method: "POST", 
 	        url: "/api/login",
 	        data: {
-	        	username: this.state.username,
-			  	password: this.state.password,
+	        	username: username,
+			  	password: password,
 	        }
 	      }
 	    );
@@ -44,13 +46,11 @@ class Login extends Component {
 	    	alert("Authenticated!");
 			this.props.displayData(true);
 			localStorage.setItem('token', loginAttempt.data.token); // set our token for easy login
+			localStorage.setItem('username', username);
+	    	localStorage.setItem('password', password);
 	    } else {
 	    	alert("Invalid username or password!");
 	    }
-	}
-
-	register = () => {
-
 	}
 
     render() {

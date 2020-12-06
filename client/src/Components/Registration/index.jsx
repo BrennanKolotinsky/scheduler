@@ -26,7 +26,10 @@ class Login extends Component {
 	}
 
 	createUser = async () => {
-		if (this.state.username === '' || this.state.password === '')
+
+		const { username, password } = this.state;
+
+		if (username === '' || password === '')
 			alert("Incomplete registration info!");
 
 		const registration = await axios(
@@ -34,8 +37,8 @@ class Login extends Component {
 	        method: "POST", 
 	        url: "/api/register",
 	        data: {
-	        	username: this.state.username,
-			  	password: this.state.password,
+	        	username: username,
+			  	password: password,
 	        }
 	      }
 	    );
@@ -43,6 +46,8 @@ class Login extends Component {
 		this.props.displayData(true);
 		this.props.updateRegistration(false);
 	    localStorage.setItem('token', registration.data.token); // set our token for easy login
+	    localStorage.setItem('username', username);
+	    localStorage.setItem('password', password);
 	}
 
     render() {
