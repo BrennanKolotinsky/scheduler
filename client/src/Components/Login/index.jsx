@@ -53,7 +53,6 @@ class Login extends Component {
 	}
 
     render() {
-
 		return (
 			<div className="marginAddedTop">
 				<h2>Login Page!</h2>

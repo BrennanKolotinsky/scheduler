@@ -14,7 +14,6 @@ class DataDisplay extends Component {
     render() {
 		const userJSON = localStorage.getItem('user');
 		const user = JSON.parse(userJSON);
-		console.log(user);
 
 		return (
 			<div className="marginAddedTop">

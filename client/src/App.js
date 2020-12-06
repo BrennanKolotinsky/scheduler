@@ -32,12 +32,10 @@ class App extends Component {
   }
 
   displayData = (auth) => {
-    console.log(this.state.register)
     this.setState({authenticated: auth});
   }
 
   updateRegistration = (registering) => {
-    console.log("here");
     this.setState({
       register: registering
     });

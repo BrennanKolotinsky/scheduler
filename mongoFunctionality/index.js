@@ -8,7 +8,7 @@ const findUser = (connect, client, username, password) => {
 const createUser = (connect, client, username, password) => {
   return connect.then(() => {
     const dbo = client.db("testDatabase");
-    return dbo.collection("users").insertOne({"username" : username, "password": password, "timesheets": null});
+    return dbo.collection("users").insertOne({"username" : username, "password": password, "timesheets": null, "currentLogging": false});
   });
 }
 
