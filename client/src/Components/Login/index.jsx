@@ -63,7 +63,7 @@ class Login extends Component {
 				<input className="block marginAddedLeft inputs" type="password" placeholder="password (test)" onKeyPress={ (event) => this.handleKeyPress(event) } onChange= { (event) => this.updatePassword(event) }></input>
 				<button className="inputs confirmBtn" onClick={ () => this.checkAuth() }>Login</button>
 				<div>
-					<button className="inputs registerBtn marginAddedSmaller" onClick={ () => this.register() }>Register</button>
+					<button className="inputs registerBtn marginAddedSmaller" onClick={ () => this.props.updateRegistration(true) }>Register</button>
 				</div>
 			</div>
 		);

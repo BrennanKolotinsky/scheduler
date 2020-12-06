@@ -30,6 +30,10 @@ h1 {
   background-color: #FFEFA9;
 }
 
+label {
+  margin-right: 30px;
+}
+
 .App {
   text-align: center;
 }
@@ -47,7 +51,6 @@ h1 {
 }
 
 .confirmBtn {
-  margin-top: 32px;
   margin-left: 16px;
   background-color: lightBlue;
 }

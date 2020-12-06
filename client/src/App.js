@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Login from "./Components/Login/index.jsx";
+import Register from "./Components/Registration/index.jsx";
 import Module from 'module';
 
 class App extends Component {
   // Initialize state
   state = {
-    passwords: [],
     authenticated: null, // start with null so that the page loads empty until tokens are checked
+    register: false,
   }
 
   componentDidMount() {
@@ -33,13 +34,20 @@ class App extends Component {
     this.setState({authenticated: auth});
   }
 
-  render() {
-    const { passwords } = this.state;
+  updateRegistration = (registering) => {
+    this.setState({
+      register: registering
+    });
+  }
 
+  render() {
     return (
       <div className="App">
-        <div style={this.state.authenticated === false ? {} : { display : 'none' } }>
-          <Login displayData={ this.displayData } authenticated={ this.state.authenticated }  />
+        <div style={this.state.authenticated === false && this.state.register === false ? {} : { display : 'none' } }>
+          <Login displayData={ this.displayData } updateRegistration={ this.updateRegistration } authenticated={ this.state.authenticated }  />
+        </div>
+        <div style={this.state.register === true ? {} : { display : 'none' } }>
+          <Register displayData={ this.displayData } updateRegistration={ this.updateRegistration } />
         </div>
       </div>
     );

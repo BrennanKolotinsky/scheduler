@@ -48,6 +48,28 @@ app.post('/api/login', async (req, res) => {
     res.send({
       auth: false
     });
+  }
+});
+
+app.post('/api/register', async (req, res) => {
+
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const user = await mongoFunctionality.createUser(mongoDBConnection, mongoDBClient, username, password);
+
+  if (user !== null) {
+    // create the login token and send it back
+    jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
+      res.json({
+        token,
+        auth: true
+      });
+    });
+  } else {
+    res.send({
+      auth: false
+    });
   }  
 });
 
