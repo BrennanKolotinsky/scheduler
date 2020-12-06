@@ -3,7 +3,6 @@ const generatePassword = require('password-generator');
 const bodyParser = require('body-parser');  // req.body now supplies information!
 const jwt = require("jsonwebtoken"); // web tokens
 const path = require('path'); // this allows us to easily combine paths
-require('dotenv').config({path: path.join(__dirname, '.env')}); // this allows us to read in variables from our .env file
 
 const app = express();
 app.use(bodyParser.json());
