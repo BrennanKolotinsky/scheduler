@@ -48,6 +48,7 @@ class Login extends Component {
 	    localStorage.setItem('token', registration.data.token); // set our token for easy login
 	    localStorage.setItem('username', username);
 	    localStorage.setItem('password', password);
+	    localStorage.setItem('uid', registration.data.user._id);
 	}
 
     render() {

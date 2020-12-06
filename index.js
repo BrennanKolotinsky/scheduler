@@ -41,7 +41,8 @@ app.post('/api/login', async (req, res) => {
     jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
       res.json({
         token,
-        auth: true
+        auth: true,
+        user: user,
       });
     });
   } else {
@@ -63,7 +64,8 @@ app.post('/api/register', async (req, res) => {
     jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
       res.json({
         token,
-        auth: true
+        auth: true,
+        user: user
       });
     });
   } else {
