@@ -24,7 +24,7 @@ app.get('/api/passwords', verifyToken, (req, res) => {
 	});
 });
 
-app.post('/api/login', verifyToken, (req, res) => {
+app.post('/api/login', (req, res) => {
   // Mock user
   const user = {
     id: 1, 
