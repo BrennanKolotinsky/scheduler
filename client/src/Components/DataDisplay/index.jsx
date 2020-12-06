@@ -41,7 +41,7 @@ class DataDisplay extends Component {
 
     	this.setState({
     		user: userData.data.user,
-    		currentLogging: false, // userData.data.user.currentLogging,
+    		currentLogging: userData.data.user.currentLogging,
     		timeperiods: userData.data.user.timeperiods == null ? [] : userData.data.user.timeperiods,
     		latestPeriod: userData.data.user.latestPeriod,
     		username: userData.data.user.username,
@@ -70,7 +70,6 @@ class DataDisplay extends Component {
 		localStorage.setItem('user', JSON.stringify(newUser.data.user.value));
 
 		this.state.timeperiods.push({startTime: newTime});
-
 	    this.setState({
 	    	user: newUser.data.user.value,
 	    	currentLogging: true,
@@ -79,9 +78,8 @@ class DataDisplay extends Component {
     }
 
     endPeriod = async () => {
-		const {username, password, latestPeriod} = this.state;
-
-		console.log(latestPeriod);
+		const {username, password, latestPeriod, timeperiods} = this.state;
+		const endTime = new Date().toString();
 
     	const newUser = await axios(
 	      {
@@ -91,18 +89,21 @@ class DataDisplay extends Component {
 	        	username: username,
 			  	password: password,
 			  	latestPeriod: latestPeriod,
-			  	endTime: new Date().toString(),
+			  	endTime: endTime,
 			  	authorization: "Bearer " + localStorage.getItem('token')
 	        }
 	      }
 	    );
 
-	    console.log(newUser.data.user.value);
-
 	    localStorage.setItem('user', JSON.stringify(newUser.data.user.value));
+
+	    // add our new end time to our timeperiods object -- could be done with filter
+	    for(let i = 0; i < timeperiods.length; i++)
+	    	if (timeperiods[i].startTime === latestPeriod)
+	    		timeperiods[i].endTime = endTime
+
 	    this.setState({
 	    	user: newUser.data.user.value,
-	    	timeperiods: newUser.data.user.value.timeperiods,
 	    	currentLogging: false
 	    });
     }
