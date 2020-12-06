@@ -47,6 +47,8 @@ class Login extends Component {
 		this.props.updateRegistration(false);
 	    localStorage.setItem('token', registration.data.token); // set our token for easy login
 	    localStorage.setItem('user', JSON.stringify(registration.data.user));
+	    localStorage.setItem('username', username);
+	  	localStorage.setItem('password', password);
 	}
 
     render() {

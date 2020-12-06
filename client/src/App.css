@@ -68,3 +68,8 @@ label {
 .block {
   margin-top: 64px;
 }
+
+.no-bullets {
+    list-style-type: none;
+    text-align: left;
+}

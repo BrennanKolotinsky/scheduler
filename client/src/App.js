@@ -32,6 +32,10 @@ class App extends Component {
   }
 
   displayData = (auth) => {
+    if (this.state.authenticated === true) {
+
+    }
+
     this.setState({authenticated: auth});
   }
 
@@ -53,7 +57,7 @@ class App extends Component {
         </div>
 
         <div style={this.state.authenticated === true ? {} : { display : 'none' } }>
-          <DataDisplay />
+          <DataDisplay authenticatedFirstTime={this.state.authenticated} />
         </div>
       </div>
     );

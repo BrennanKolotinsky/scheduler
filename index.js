@@ -61,7 +61,7 @@ app.post('/api/register', async (req, res) => {
 
   if (user !== null) {
     // create the login token and send it back
-    jwt.sign({user}, 'secretkey', { expiresIn: '300s' }, (err, token) => {
+    jwt.sign({user}, 'secretkey', { expiresIn: '1200s' }, (err, token) => {
       res.json({
         token,
         auth: true,
@@ -76,9 +76,18 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/addPeriod', async (req, res) => {
-
+  console.log("start");
   const {username, password, startTime} = req.body;
   const user = await mongoFunctionality.addPeriod(mongoDBConnection, mongoDBClient, username, password, startTime);
+  res.send({
+    user: user
+  });
+});
+
+app.post('/api/endPeriod', async (req, res) => {
+  console.log("end");
+  const {username, password, endTime, latestPeriod} = req.body;
+  const user = await mongoFunctionality.endPeriod(mongoDBConnection, mongoDBClient, username, password, endTime, latestPeriod);
   res.send({
     user: user
   });

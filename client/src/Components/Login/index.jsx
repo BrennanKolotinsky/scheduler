@@ -47,6 +47,8 @@ class Login extends Component {
 			this.props.displayData(true);
 			localStorage.setItem('token', loginAttempt.data.token); // set our token for easy login
 	  		localStorage.setItem('user', JSON.stringify(loginAttempt.data.user));
+	  		localStorage.setItem('username', username);
+	  		localStorage.setItem('password', password);
 	    } else {
 	    	alert("Invalid username or password!");
 	    }
