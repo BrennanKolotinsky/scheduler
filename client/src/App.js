@@ -5,6 +5,7 @@ import Login from "./Components/Login/index.jsx";
 import Register from "./Components/Registration/index.jsx";
 import DataDisplay from "./Components/DataDisplay/index.jsx";
 import Module from 'module';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 class App extends Component {
   // Initialize state
@@ -33,7 +34,6 @@ class App extends Component {
 
   displayData = (auth) => {
     if (this.state.authenticated === true) {
-
     }
 
     this.setState({authenticated: auth});
@@ -57,7 +57,7 @@ class App extends Component {
         </div>
 
         <div style={this.state.authenticated === true ? {} : { display : 'none' } }>
-          <DataDisplay authenticatedFirstTime={this.state.authenticated} />
+          <DataDisplay authenticated={this.state.authenticated} />
         </div>
       </div>
     );

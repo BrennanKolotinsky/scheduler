@@ -5,19 +5,27 @@ class DataDisplay extends Component {
 	constructor(props) {
     	super(props);
 
-    	let userJSON = localStorage.getItem('user');
-		let user = JSON.parse(userJSON);
-
     	this.state = {
-    		startTime: null,
-    		endTime: null,
-    		user: user,
-    		currentLogging: false,//user.currentLogging,
-    		timeperiods: user.timeperiods
+    		doNotReload: false
     	};
+
+  //   	let userJSON = localStorage.getItem('user');
+		// let user = JSON.parse(userJSON);
+
+
+
+    	// this.state = {
+    	// 	startTime: null,
+    	// 	endTime: null,
+    	// 	user: user,
+    	// 	currentLogging: false,//user.currentLogging,
+    	// 	timeperiods: user.timeperiods
+    	// };
     }
 
     reloadUser = async () => {
+
+    	console.log("here");
 
     	// let's grab the user data
     	const userData = await axios(
@@ -31,12 +39,12 @@ class DataDisplay extends Component {
 	      }
 	    );
 
-    	this.setState = {
+    	this.setState({
     		user: userData.data.user,
-    		currentLogging: userData.currentLogging,
-    		timeperiods: userData.timeperiods,
+    		currentLogging: userData.data.user.currentLogging,
+    		timeperiods: userData.data.user.timeperiods,
     		doNotReload: true
-    	};
+    	});
     }
 
     startPeriod = async () => {
@@ -44,6 +52,7 @@ class DataDisplay extends Component {
 		const user = JSON.parse(userJSON);
 
 		const {username, password} = user;
+		const newTime = new Date();
     	const newUser = await axios(
 	      {
 	        method: "POST", 
@@ -51,14 +60,18 @@ class DataDisplay extends Component {
 	        data: {
 	        	username: username,
 			  	password: password,
-			  	startTime: new Date(),
+			  	startTime: newTime,
 			  	authorization: "Bearer " + localStorage.getItem('token')
 	        }
 	      }
 	    );
 
-	    localStorage.setItem('user', JSON.stringify(newUser.data.user));
-	    this.reloadUser();
+	    // this.state.timeperiods.push({startTime: newTime})
+		localStorage.setItem('user', JSON.stringify(newUser.data.user));
+	    
+	    this.setState({
+	    	currentLogging: true,
+	    });
     }
 
     endPeriod = async () => {
@@ -83,11 +96,17 @@ class DataDisplay extends Component {
 
 	    localStorage.setItem('user', JSON.stringify(newUser.data.user));
 
-	    this.reloadUser();
+	    this.setState({
+	    	user: newUser,
+	    	timeperiods: user.timeperiods
+	    	// currentLogging: false,
+	    });
     }
 
     render() {
 
+    	console.log("state", this.state);
+    	console.log(this.props.authenticated);
     	if (this.props.authenticated && !this.state.doNotReload) {
     		this.reloadUser();
     	}
@@ -96,7 +115,7 @@ class DataDisplay extends Component {
 		
 		return (
 			<div className="marginAddedTop">
-				{user !== null ? 
+				{user !== null && user !== undefined && user.username !== null && user.username !== undefined ? 
 					(
 						<h2>Timesheet Page! {user.username}'s Data:</h2>	
 					) : 
@@ -105,15 +124,27 @@ class DataDisplay extends Component {
 					)
 				}
 
-				<div style={this.state.currentLogging === false || this.state.currentLogging === undefined ? {} : { display : 'none' } }>
-					<label>Start New Time Period</label>
-					<button className="inputs confirmBtn block" onClick={ () => this.startPeriod() }>Start!</button>
-				</div>
+				{this.state.currentLogging !== null && this.state.currentLogging !== undefined && this.state.currentLogging === false ? (
+					<div>
+						<label>Start New Time Period</label>
+						<button className="inputs confirmBtn block" onClick={ () => this.startPeriod() }>Start!</button>
+					</div>
+				) : 
+				(
+					<p></p>
+				)
+				}
 
-				<div style={this.state.currentLogging === true ? {} : { display : 'none' } }>
-					<label>End Current Time Period (Started @ {user.latestPeriod})</label>
-					<button className="inputs registerBtn block" onClick={ () => this.endPeriod() }>End!</button>
-				</div>
+				{this.state.currentLogging === true ? (
+					<div>
+						<label>End Current Time Period (Started @ {user.latestPeriod})</label>
+						<button className="inputs registerBtn block" onClick={ () => this.endPeriod() }>End!</button>
+					</div>
+				) : 
+				(
+					<p></p>
+				)
+				}
 
 				{this.state.timeperiods && this.state.timeperiods.length ? (
 					<ul className="timeperiods marginAddedSmaller no-bullets">

@@ -23,6 +23,7 @@
     "module": "^1.2.5",
     "mongodb": "^3.6.3",
     "password-generator": "^2.3.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-router-dom": "^6.0.0-beta.0"
   }
 }
