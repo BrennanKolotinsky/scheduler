@@ -6,14 +6,14 @@ class DataDisplay extends Component {
     	super(props);
 
     	this.state = {
-    		doNotReload: false
+    		doNotReload: false,
+    		user: null,
+    		latestPeriod: null,
     	};
 
-  //   	let userJSON = localStorage.getItem('user');
+    	// caching
+        // let userJSON = localStorage.getItem('user');
 		// let user = JSON.parse(userJSON);
-
-
-
     	// this.state = {
     	// 	startTime: null,
     	// 	endTime: null,
@@ -25,7 +25,7 @@ class DataDisplay extends Component {
 
     reloadUser = async () => {
 
-    	console.log("here");
+    	console.log("Loaded user data");
 
     	// let's grab the user data
     	const userData = await axios(
@@ -41,18 +41,19 @@ class DataDisplay extends Component {
 
     	this.setState({
     		user: userData.data.user,
-    		currentLogging: userData.data.user.currentLogging,
-    		timeperiods: userData.data.user.timeperiods,
+    		currentLogging: false, // userData.data.user.currentLogging,
+    		timeperiods: userData.data.user.timeperiods == null ? [] : userData.data.user.timeperiods,
+    		latestPeriod: userData.data.user.latestPeriod,
+    		username: userData.data.user.username,
+    		password: userData.data.user.password,
     		doNotReload: true
     	});
     }
 
     startPeriod = async () => {
-    	const userJSON = localStorage.getItem('user');
-		const user = JSON.parse(userJSON);
+		const {username, password} = this.state;
+		const newTime = new Date().toString();
 
-		const {username, password} = user;
-		const newTime = new Date();
     	const newUser = await axios(
 	      {
 	        method: "POST", 
@@ -66,19 +67,18 @@ class DataDisplay extends Component {
 	      }
 	    );
 
-	    // this.state.timeperiods.push({startTime: newTime})
-		localStorage.setItem('user', JSON.stringify(newUser.data.user));
-	    
+		localStorage.setItem('user', JSON.stringify(newUser.data.user.value));
+
+		this.state.timeperiods.push({startTime: newTime});
+
 	    this.setState({
-	    	currentLogging: true,
+	    	user: newUser.data.user.value,
+	    	currentLogging: true
 	    });
     }
 
     endPeriod = async () => {
-    	const userJSON = localStorage.getItem('user');
-		const user = JSON.parse(userJSON);
-
-		const {username, password} = user;
+		const {username, password, latestPeriod} = this.state;
 
     	const newUser = await axios(
 	      {
@@ -87,26 +87,24 @@ class DataDisplay extends Component {
 	        data: {
 	        	username: username,
 			  	password: password,
-			  	latestPeriod: user.latestPeriod,
-			  	endTime: new Date(),
+			  	latestPeriod: latestPeriod,
+			  	endTime: new Date().toString(),
 			  	authorization: "Bearer " + localStorage.getItem('token')
 	        }
 	      }
 	    );
 
-	    localStorage.setItem('user', JSON.stringify(newUser.data.user));
+	    console.log(newUser.data.user.value);
 
+	    localStorage.setItem('user', JSON.stringify(newUser.data.user.value));
 	    this.setState({
-	    	user: newUser,
-	    	timeperiods: user.timeperiods
-	    	// currentLogging: false,
+	    	user: newUser.data.user.value,
+	    	timeperiods: newUser.data.user.value.timeperiods,
+	    	currentLogging: false
 	    });
     }
 
     render() {
-
-    	console.log("state", this.state);
-    	console.log(this.props.authenticated);
     	if (this.props.authenticated && !this.state.doNotReload) {
     		this.reloadUser();
     	}
@@ -135,7 +133,7 @@ class DataDisplay extends Component {
 				)
 				}
 
-				{this.state.currentLogging === true ? (
+				{this.state.currentLogging === true && user.latestPeriod ? (
 					<div>
 						<label>End Current Time Period (Started @ {user.latestPeriod})</label>
 						<button className="inputs registerBtn block" onClick={ () => this.endPeriod() }>End!</button>

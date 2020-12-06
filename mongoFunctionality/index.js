@@ -14,7 +14,6 @@ const createUser = (connect, client, username, password) => {
 
 const addPeriod = (connect, client, username, password, startTime) => {
   return connect.then(() => {
-  	console.log("hit");
     const dbo = client.db("testDatabase");
     return dbo.collection("users").findOneAndUpdate(
     	{"username" : username, "password": password},
@@ -40,8 +39,8 @@ const endPeriod = (connect, client, username, password, endTime, latestPeriod) =
     ).then(() => {
     	console.log(latestPeriod);
     	return dbo.collection("users").findOneAndUpdate(
-	    	{"username" : username, "password": password, "startTime": latestPeriod},
-	        {$set: { 
+	    	{"username" : username, "password": password, "timeperiods.startTime": latestPeriod},
+	        {$set: {
 	          "timeperiods.$" : {endTime: endTime},
 	        } }
         );
