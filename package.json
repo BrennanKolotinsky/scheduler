@@ -2,10 +2,10 @@
   "name": "scheduler",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "heroku-postbuild": "cd .. && cd client && npm install && npm run build"
+    "start": "node index.js",
+    "heroku-postbuild": "client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
