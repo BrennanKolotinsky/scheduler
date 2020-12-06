@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import axios from 'axios';
 
 class App extends Component {
   // Initialize state
@@ -10,11 +11,31 @@ class App extends Component {
     this.getPasswords();
   }
 
-  getPasswords = () => {
-    // Get the passwords and store them in state
-    fetch('/api/passwords')
-      .then(res => res.json())
-      .then(passwords => this.setState({ passwords }));
+  getPasswords = async () => {
+
+    // login do this elsewhere once I have a login section!
+    const token = await axios(
+      {
+        method: "POST", 
+        url: "/api/login",
+        data: {
+        }
+      }
+    );
+
+    localStorage.setItem('token', token);
+
+    let passwords = await axios(
+      {
+        method: "POST", 
+        url: "/api/passwords",
+        data: {
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImJyYWQiLCJlbWFpbCI6ImJyYWRAZ21haWwuY29tIn0sImlhdCI6MTYwNzIxNjU2N30.mZZ3ETGcH-NOu7s-TE50kpXbC3Py0wuMXmUjUrtoMw8"
+        }
+      }
+    );
+
+    this.setState({ passwords: passwords.data })
   }
 
   render() {

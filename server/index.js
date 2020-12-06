@@ -1,25 +1,29 @@
 const express = require('express');
 const path = require('path');
 const generatePassword = require('password-generator');
+const bodyParser = require('body-parser');  // req.body now supplies information!
 const jwt = require("jsonwebtoken");
 
 const app = express();
+app.use(bodyParser.json());
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/api/passwords', verifyToken, (req, res) => {
+app.post('/api/passwords', (req, res) => {
 	// authData is the user
-	jwt.verify(req.token, 'secretkey', (err, authData) => {
+  const token = req.body.token;
+	jwt.verify(token, 'secretkey', (err, authData) => {
 	    if(err) {
-	      res.sendStatus(403);
+        res.json({error: err});
+	      // res.sendStatus(403);
 	    } else {
 	    	const count = 5;
-			const passwords = Array.from(Array(count).keys()).map(i =>
+			  const passwords = Array.from(Array(count).keys()).map(i =>
 			    generatePassword(12, false)
-			);
-			res.json(passwords);
-			console.log(`Sent ${count} passwords`);
+			  );
+			  res.json(passwords);
+			  console.log(`Sent ${count} passwords`);
 	    }
 	});
 });
@@ -62,9 +66,9 @@ function verifyToken(req, res, next) {
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname+'/client/build/index.html'));
+// });
 
 const port = process.env.PORT || 5000;
 app.listen(port);

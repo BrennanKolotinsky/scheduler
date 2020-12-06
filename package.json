@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server/index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
@@ -12,11 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "add": "^2.0.6",
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
     "cookie-session": "^1.4.0",
     "create-react-app": "^4.0.1",
     "express": "^4.17.1",
     "global": "^4.4.0",
     "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.6",
     "password-generator": "^2.3.2"
   }
 }
