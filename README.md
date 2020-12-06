@@ -27,6 +27,7 @@ Immediate:
   - Such as updating the time periods via manual entry (make them inputs)
   - Display the time in a more readable format in the persons local timezone
   - Ability to remove a time period from the system
+3. Add pipelines connecting GitHub and Heroku (right now, I push the code twice)
 
 Longterm
 1. I would expand on the authentication system
@@ -36,3 +37,4 @@ Longterm
   - Easier to navigate
 3. I would improve the UI, making it look more professional
 4. I would consider other technologies for scalability
+5. Buy a domain to change the URL
