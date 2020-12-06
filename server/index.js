@@ -68,7 +68,7 @@ function verifyToken(req, res, next) {
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-if (process.env.REACT_APP_LOCAL === "true") {
+if (process.env.REACT_APP_LOCAL !== "true") {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
   });
