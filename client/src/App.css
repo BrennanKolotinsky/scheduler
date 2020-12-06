@@ -29,3 +29,31 @@ h1 {
 .more:active {
   background-color: #FFEFA9;
 }
+
+.App {
+  text-align: center;
+}
+
+.marginAddedTop {
+  margin-top: 128px;  
+}
+
+.confirmBtn {
+  margin-top: 32px;
+  margin-left: 16px;
+  background-color: lightBlue;
+}
+
+.marginAddedLeft {
+  margin-left: 16px;
+}
+
+.inputs {
+  font-size: 24px;
+  width: 200px;
+  font: center;
+}
+
+.block {
+  margin-top: 64px;
+}

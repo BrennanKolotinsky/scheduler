@@ -20,6 +20,8 @@
     "express": "^4.17.1",
     "global": "^4.4.0",
     "jsonwebtoken": "^8.5.1",
+    "module": "^1.2.5",
+    "mongodb": "^3.6.3",
     "password-generator": "^2.3.2",
     "path": "^0.12.7"
   }
