@@ -40,9 +40,9 @@ class Login extends Component {
 	      }
 	    );
 
-	    if (loginAttempt.data.auth === 1) {
+	    if (loginAttempt.data.auth === true) {
 	    	alert("Authenticated!");
-			this.props.displayData();
+			this.props.displayData(true);
 			localStorage.setItem('token', loginAttempt.data.token); // set our token for easy login
 	    } else {
 	    	alert("Invalid username or password!");

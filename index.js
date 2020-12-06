@@ -29,21 +29,26 @@ app.post('/api/checkLoginTokenIsValid', (req, res) => {
 	});
 });
 
-app.post('/api/login', (req, res) => {
-  // Mock user
-  const user = {
-    id: 1, 
-    username: 'brad',
-    email: 'brad@gmail.com'
-  }
+app.post('/api/login', async (req, res) => {
 
-  // create the login token and send it back
-  jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
-    res.json({
-      token,
-      auth: 1
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const user = await mongoFunctionality.findUser(mongoDBConnection, mongoDBClient, username, password);
+
+  if (user !== null) {
+    // create the login token and send it back
+    jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
+      res.json({
+        token,
+        auth: true
+      });
     });
-  });
+  } else {
+    res.send({
+      auth: false
+    });
+  }  
 });
 
 // Verify Token -- middleware

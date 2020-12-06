@@ -8,7 +8,7 @@ class App extends Component {
   // Initialize state
   state = {
     passwords: [],
-    authenticated: false,
+    authenticated: null, // start with null so that the page loads empty until tokens are checked
   }
 
   componentDidMount() {
@@ -26,12 +26,11 @@ class App extends Component {
       }
     );
 
-    if (validToken.data.auth === 1)
-      this.displayData();
+    this.displayData(validToken.data.auth === undefined ? false : validToken.data.auth);
   }
 
-  displayData = () => {
-    this.setState({authenticated: true});
+  displayData = (auth) => {
+    this.setState({authenticated: auth});
   }
 
   render() {
@@ -39,7 +38,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div style={this.state.authenticated == false ? {} : { display : 'none' } }>
+        <div style={this.state.authenticated === false ? {} : { display : 'none' } }>
           <Login displayData={ this.displayData } authenticated={ this.state.authenticated }  />
         </div>
       </div>
