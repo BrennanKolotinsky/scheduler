@@ -24,7 +24,7 @@ app.post('/api/checkLoginTokenIsValid', (req, res) => {
         res.json({error: err});
 	      // res.sendStatus(403);
 	    } else {
-			  res.json({auth: 1});
+			  res.json({auth: true});
 	    }
 	});
 });
@@ -61,7 +61,7 @@ app.post('/api/register', async (req, res) => {
 
   if (user !== null) {
     // create the login token and send it back
-    jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
+    jwt.sign({user}, 'secretkey', { expiresIn: '300s' }, (err, token) => {
       res.json({
         token,
         auth: true,
@@ -75,10 +75,20 @@ app.post('/api/register', async (req, res) => {
   }  
 });
 
+app.post('/api/addPeriod', async (req, res) => {
+
+  const {username, password, startTime} = req.body;
+  const user = await mongoFunctionality.addPeriod(mongoDBConnection, mongoDBClient, username, password, startTime);
+  res.send({
+    user: user
+  });
+});
+
 // Verify Token -- middleware
 function verifyToken(req, res, next) {
   // Get auth header value
   const bearerHeader = req.headers['authorization'];
+  console.log(bearerHeader);
   // Check if bearer is undefined
   if(typeof bearerHeader !== 'undefined') {
     // Split at the space
@@ -104,4 +114,4 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log(`Password generator listening on ${port}`);
+console.log(`App listening on ${port}`);
