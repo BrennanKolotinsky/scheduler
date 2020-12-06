@@ -73,12 +73,15 @@ class DataDisplay extends Component {
 
 	    this.setState({
 	    	user: newUser.data.user.value,
-	    	currentLogging: true
+	    	currentLogging: true,
+	    	latestPeriod: newTime,
 	    });
     }
 
     endPeriod = async () => {
 		const {username, password, latestPeriod} = this.state;
+
+		console.log(latestPeriod);
 
     	const newUser = await axios(
 	      {

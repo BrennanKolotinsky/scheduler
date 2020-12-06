@@ -32,23 +32,17 @@ const addPeriod = (connect, client, username, password, startTime) => {
 const endPeriod = (connect, client, username, password, endTime, latestPeriod) => {
   return connect.then(() => {
     const dbo = client.db("testDatabase");
-    console.log("here");
-    return dbo.collection("users").findOneAndUpdate(
-    	{"username" : username, "password": password},
-        { $set: {"currentLogging": false} }
-    ).then(() => {
-    	console.log(latestPeriod);
     	return dbo.collection("users").findOneAndUpdate(
 	    	{"username" : username, "password": password, "timeperiods.startTime": latestPeriod},
 	        {$set: {
-	          "timeperiods.$" : {endTime: endTime},
-	        } }
+	          "timeperiods.$.endTime": endTime,
+            "currentLogging": false,
+          } }
         );
-    }); 
   });
 }
 
 exports.findUser = findUser;
 exports.createUser = createUser;
 exports.addPeriod = addPeriod;
-exports.endPeriod = addPeriod;
+exports.endPeriod = endPeriod;

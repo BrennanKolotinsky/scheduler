@@ -76,7 +76,6 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/addPeriod', async (req, res) => {
-  console.log("start");
   const {username, password, startTime} = req.body;
   const user = await mongoFunctionality.addPeriod(mongoDBConnection, mongoDBClient, username, password, startTime);
   res.send({
@@ -85,8 +84,8 @@ app.post('/api/addPeriod', async (req, res) => {
 });
 
 app.post('/api/endPeriod', async (req, res) => {
-  console.log("end");
   const {username, password, endTime, latestPeriod} = req.body;
+  console.log(latestPeriod);
   const user = await mongoFunctionality.endPeriod(mongoDBConnection, mongoDBClient, username, password, endTime, latestPeriod);
   res.send({
     user: user
