@@ -4,7 +4,7 @@ Node.js app -- trying a few new things: keeping server and source code in the sa
 
 # Approach
 1. Setup the server the way I wanted -- one directory using proxies -- link this with Heroku and GitHub
-  - Make sure the server can take requests AND send static HTML
+  - Make sure the server can take requests AND send static HTML -- see: https://afternoon-atoll-53549.herokuapp.com/
 2. Build out a simple authenitcation system (using JWT)
 3. Try to add some caching
 4. After, I had tried learning new things, I setup the app as a react app and built familiar things:
