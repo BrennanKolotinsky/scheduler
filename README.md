@@ -15,7 +15,7 @@ Node.js app -- trying a few new things: keeping server and source code in the sa
 5. Once that was done I tried to iron out the biggest bugs
 
 # Schema
-I used MongoDB as my schema design. I find it is the fast to get up and running on a free server. A more structured SQL design might be better if there were very clear requirements for data structure and more time to plan
+I used MongoDB as my schema design. I find it is the fastest to get up and running on a free server. A more structured SQL design might be better if there were very clear requirements for data structure and more time to plan
 
 # Addditional Features
 Immediate:
